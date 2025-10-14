@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AGRI DOST | Smart Farming Advisory</title>
+<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Poppins', sans-serif; }
+  </style>
+</head>
+<body class="bg-gray-100">
+
+  <!-- Sidebar -->
+  <div class="flex h-screen">
+    <aside class="w-64 bg-white shadow-md flex flex-col justify-between">
+      <div>
+        <div class="p-6 border-b">
+          <h1 class="text-2xl font-extrabold text-green-700">AGRI DOST</h1>
+          <p class="text-sm text-gray-500">Smart Farming Advisory</p>
+        </div>
+
+        <nav class="mt-4 space-y-2">
+          <a href="home.html" class="flex items-center px-6 py-3 bg-green-100 text-green-800 font-semibold">
+            <span class="material-icons mr-3">home</span> Home
+          </a>
+          <a href="dashboard1.html" class="flex items-center px-6 py-3 text-gray-700 hover:bg-green-50">
+            <span class="material-icons mr-3">dashboard</span> Dashboard
+          </a>
+          <a href="disease-detection1.html" class="flex items-center px-6 py-3 text-gray-700 hover:bg-green-50">
+            <span class="material-icons mr-3">healing</span> Disease Detection
+          </a>
+        <a href="login.html" class="flex items-center px-6 py-3 bg-green-100 text-green-800 font-semibold">
+            <span class="material-icons mr-3">Login</span> Login
+          </a>
+
+        </nav>
+      </div>
+
+      <div class="border-t p-4">
+        <a href="settings.html" class="flex items-center text-gray-700 hover:text-green-700 mb-3">
+          <span class="material-icons mr-3">settings</span> Settings
+        </a>
+        <a href="help.html" class="flex items-center text-gray-700 hover:text-green-700">
+          <span class="material-icons mr-3">help_outline</span> Help
+        </a>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="flex-1 overflow-y-auto">
+      <!-- Header Banner -->
+      <section class="relative">
+        <img src="https://images.unsplash.com/photo-1501004318641-b39e6451bec6?auto=format&fit=crop&w=1600&q=80"
+             alt="Farming background" 
+             class="w-full h-96 object-cover">
+        <div class="absolute inset-0 bg-black bg-opacity-40 flex flex-col justify-center items-center text-center text-white">
+          <h1 class="text-5xl font-extrabold mb-2">AGRI DOST</h1>
+          <p class="text-2xl mb-4">समृद्धि की खेती करें</p>
+          <p class="text-lg mb-6">AI-Powered Smart Farming Advisory for Indian Farmers</p>
+          <div>
+            <a href="login.html" class="bg-green-600 px-6 py-3 rounded-md font-semibold hover:bg-green-700 transition">Get Started</a>
+            <a href="learn-more.html" class="bg-white text-gray-800 px-6 py-3 rounded-md font-semibold ml-3 hover:bg-gray-200 transition">Learn More</a>
+          </div>
+        </div>
+      </section>
+
+      <!-- Features Section -->
+      <section class="p-10 bg-white shadow-md mt-8 mx-6 rounded-2xl">
+        <h2 class="text-3xl font-bold text-center mb-8 text-gray-800">Key Features</h2>
+        <div class="grid md:grid-cols-3 gap-8">
+          <div class="text-center p-6 border rounded-xl hover:shadow-lg transition">
+            <span class="material-icons text-green-600 text-5xl mb-3">analytics</span>
+            <h3 class="font-semibold text-xl mb-2">Smart Dashboard</h3>
+            <p class="text-gray-600">Monitor your crops, soil health, and weather patterns in one place.</p>
+          </div>
+          <div class="text-center p-6 border rounded-xl hover:shadow-lg transition">
+            <span class="material-icons text-green-600 text-5xl mb-3">healing</span>
+            <h3 class="font-semibold text-xl mb-2">Disease Detection</h3>
+            <p class="text-gray-600">Use AI-based image recognition to detect crop diseases instantly.</p>
+          </div>
+          <div class="text-center p-6 border rounded-xl hover:shadow-lg transition">
+            <span class="material-icons text-green-600 text-5xl mb-3">shopping_basket</span>
+            <h3 class="font-semibold text-xl mb-2">Crop Shopping</h3>
+            <p class="text-gray-600">Buy seeds, fertilizers, and tools directly from trusted sellers.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Footer -->
+      <footer class="mt-10 text-center py-6 bg-gray-200 text-gray-600 text-sm">
+        © 2025 AGRI DOST | Smart Farming Advisory for Indian Farmers
+      </footer>
+    </main>
+  </div>
+
+  <!-- Google Icons -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</body>
+</html>
