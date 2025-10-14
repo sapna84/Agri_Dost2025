@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AGRI DOST | Market Prices</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Poppins', sans-serif; }
+  </style>
+</head>
+<body class="bg-gray-100">
+
+  <div class="flex min-h-screen">
+
+    <!-- Sidebar -->
+    <aside class="w-64 bg-white shadow-md flex flex-col justify-between">
+      <div>
+        <div class="p-6 border-b">
+          <h1 class="text-2xl font-extrabold text-green-700">AGRI DOST</h1>
+          <p class="text-sm text-gray-500">Smart Farming Dashboard</p>
+        </div>
+        <nav class="mt-4 space-y-2">
+          <a href="home.html" class="flex items-center px-6 py-3 text-gray-700 hover:bg-green-50">
+            <span class="material-icons mr-3">home</span> Home
+          </a>
+          <a href="dashboard.html" class="flex items-center px-6 py-3 text-gray-700 hover:bg-green-50">
+            <span class="material-icons mr-3">dashboard</span> Dashboard
+          </a>
+          <a href="disease-detection.html" class="flex items-center px-6 py-3 text-gray-700 hover:bg-green-50">
+            <span class="material-icons mr-3">healing</span> Disease Detection
+          </a>
+          <a href="market-price.html" class="flex items-center px-6 py-3 bg-green-100 text-green-800 font-semibold">
+            <span class="material-icons mr-3">show_chart</span> Market Prices
+          </a>
+          <a href="crop-sell.html" class="flex items-center px-6 py-3 text-gray-700 hover:bg-green-50">
+            <span class="material-icons mr-3">shopping_cart</span> Crop Shopping
+          </a>
+        </nav>
+      </div>
+      <div class="border-t p-4">
+        <a href="settings.html" class="flex items-center text-gray-700 hover:text-green-700 mb-3">
+          <span class="material-icons mr-3">settings</span> Settings
+        </a>
+        <a href="help.html" class="flex items-center text-gray-700 hover:text-green-700">
+          <span class="material-icons mr-3">help_outline</span> Help
+        </a>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="flex-1 p-8 overflow-y-auto">
+      <div class="flex justify-between items-center mb-8">
+        <h2 class="text-3xl font-bold text-gray-800">Market Price Insights</h2>
+      </div>
+
+      <!-- Filter Section -->
+      <div class="bg-white p-6 mb-8 rounded-2xl shadow-md flex flex-wrap items-center gap-4">
+        <div>
+          <label class="block text-gray-700 font-semibold mb-1">Select Crop</label>
+          <select id="cropSelect" class="border p-2 rounded-md">
+            <option value="">All Crops</option>
+            <option>Wheat</option>
+            <option>Rice</option>
+            <option>Maize</option>
+            <option>Cotton</option>
+            <option>Sugarcane</option>
+            <option>Mustard</option>
+            <option>Onion</option>
+            <option>Potato</option>
+            <option>Pulses</option>
+            <option>Groundnut</option>
+          </select>
+        </div>
+        <div>
+          <label class="block text-gray-700 font-semibold mb-1">Select State</label>
+          <select id="stateSelect" class="border p-2 rounded-md">
+            <option value="">All States</option>
+            <option>Uttar Pradesh</option>
+            <option>Punjab</option>
+            <option>Haryana</option>
+            <option>Delhi</option>
+            <option>Gujarat</option>
+            <option>Madhya Pradesh</option>
+            <option>Maharashtra</option>
+            <option>Karnataka</option>
+            <option>Tamil Nadu</option>
+            <option>Andhra Pradesh</option>
+            <option>Telangana</option>
+            <option>Rajasthan</option>
+            <option>Bihar</option>
+            <option>Odisha</option>
+            <option>West Bengal</option>
+            <option>Chhattisgarh</option>
+            <option>Uttarakhand</option>
+            <option>Jharkhand</option>
+            <option>Assam</option>
+            <option>Kerala</option>
+          </select>
+        </div>
+        <button id="filterBtn" class="bg-green-600 text-white px-5 py-2 rounded-lg hover:bg-green-700">Filter</button>
+      </div>
+
+      <!-- Market Table -->
+      <div class="bg-white p-8 rounded-2xl shadow-md">
+        <h3 class="text-xl font-semibold text-green-700 mb-4 flex items-center">
+          <span class="material-icons mr-2">local_offer</span> Current Crop Prices
+        </h3>
+
+        <table class="w-full text-left border">
+          <thead>
+            <tr class="bg-green-100 text-gray-700">
+              <th class="p-3">Crop</th>
+              <th class="p-3">State</th>
+              <th class="p-3">Market</th>
+              <th class="p-3">Price (₹/Quintal)</th>
+              <th class="p-3">Change</th>
+              <th class="p-3">Last Updated</th>
+            </tr>
+          </thead>
+          <tbody id="priceTableBody"></tbody>
+        </table>
+      </div>
+
+      <footer class="mt-10 text-center text-gray-600 text-sm">
+        © 2025 AGRI DOST | Real-time Market Intelligence for Farmers
+      </footer>
+    </main>
+  </div>
+
+  <script>
+    const priceData = [
+      { crop: "Wheat", state: "Punjab", market: "Ludhiana", price: 2300, change: "+1.2%", date: "Today" },
+      { crop: "Wheat", state: "Haryana", market: "Hisar", price: 2250, change: "+0.8%", date: "Today" },
+      { crop: "Wheat", state: "Uttar Pradesh", market: "Agra", price: 2220, change: "-0.4%", date: "Today" },
+      { crop: "Rice", state: "West Bengal", market: "Kolkata", price: 3050, change: "+1.0%", date: "Today" },
+      { crop: "Rice", state: "Tamil Nadu", market: "Thanjavur", price: 2990, change: "-0.2%", date: "Today" },
+      { crop: "Maize", state: "Madhya Pradesh", market: "Indore", price: 1820, change: "+0.5%", date: "Today" },
+      { crop: "Maize", state: "Bihar", market: "Patna", price: 1780, change: "-0.8%", date: "Today" },
+      { crop: "Cotton", state: "Gujarat", market: "Rajkot", price: 6200, change: "+2.1%", date: "Today" },
+      { crop: "Cotton", state: "Telangana", market: "Warangal", price: 6100, change: "+0.6%", date: "Today" },
+      { crop: "Sugarcane", state: "Maharashtra", market: "Pune", price: 320, change: "Stable", date: "Today" },
+      { crop: "Sugarcane", state: "Karnataka", market: "Belagavi", price: 310, change: "-0.3%", date: "Today" },
+      { crop: "Mustard", state: "Rajasthan", market: "Jaipur", price: 5500, change: "+1.4%", date: "Today" },
+      { crop: "Mustard", state: "Uttarakhand", market: "Dehradun", price: 5400, change: "-0.2%", date: "Today" },
+      { crop: "Onion", state: "Maharashtra", market: "Nashik", price: 2000, change: "+3.2%", date: "Today" },
+      { crop: "Onion", state: "Gujarat", market: "Ahmedabad", price: 1950, change: "-1.0%", date: "Today" },
+      { crop: "Potato", state: "Uttar Pradesh", market: "Kanpur", price: 1100, change: "+0.5%", date: "Today" },
+      { crop: "Potato", state: "West Bengal", market: "Howrah", price: 1050, change: "-0.8%", date: "Today" },
+      { crop: "Pulses", state: "Madhya Pradesh", market: "Bhopal", price: 7200, change: "+1.0%", date: "Today" },
+      { crop: "Pulses", state: "Chhattisgarh", market: "Raipur", price: 7100, change: "-0.3%", date: "Today" },
+      { crop: "Groundnut", state: "Gujarat", market: "Junagadh", price: 5600, change: "+0.9%", date: "Today" },
+      { crop: "Groundnut", state: "Andhra Pradesh", market: "Anantapur", price: 5500, change: "+0.3%", date: "Today" },
+      { crop: "Rice", state: "Assam", market: "Guwahati", price: 2970, change: "+0.5%", date: "Today" },
+      { crop: "Wheat", state: "Rajasthan", market: "Kota", price: 2260, change: "+0.6%", date: "Today" },
+      { crop: "Maize", state: "Odisha", market: "Cuttack", price: 1750, change: "-0.7%", date: "Today" },
+      { crop: "Cotton", state: "Andhra Pradesh", market: "Guntur", price: 6150, change: "+1.1%", date: "Today" },
+      { crop: "Mustard", state: "Bihar", market: "Muzaffarpur", price: 5350, change: "-0.5%", date: "Today" },
+      { crop: "Pulses", state: "Jharkhand", market: "Ranchi", price: 7000, change: "+0.4%", date: "Today" },
+      { crop: "Groundnut", state: "Tamil Nadu", market: "Madurai", price: 5550, change: "+0.6%", date: "Today" },
+      { crop: "Sugarcane", state: "Uttar Pradesh", market: "Meerut", price: 325, change: "Stable", date: "Today" },
+      { crop: "Rice", state: "Kerala", market: "Kochi", price: 3020, change: "+0.2%", date: "Today" },
+      { crop: "Onion", state: "Karnataka", market: "Hubballi", price: 1900, change: "-0.5%", date: "Today" },
+      { crop: "Potato", state: "Bihar", market: "Gaya", price: 1120, change: "+0.9%", date: "Today" },
+      { crop: "Wheat", state: "Chhattisgarh", market: "Raipur", price: 2210, change: "-0.2%", date: "Today" },
+      { crop: "Maize", state: "Telangana", market: "Nizamabad", price: 1810, change: "+0.3%", date: "Today" },
+      { crop: "Cotton", state: "Maharashtra", market: "Nagpur", price: 6300, change: "+2.5%", date: "Today" },
+      { crop: "Groundnut", state: "Odisha", market: "Balasore", price: 5480, change: "+0.1%", date: "Today" },
+      { crop: "Onion", state: "Tamil Nadu", market: "Coimbatore", price: 1980, change: "+0.8%", date: "Today" },
+      { crop: "Potato", state: "Punjab", market: "Jalandhar", price: 1080, change: "-0.3%", date: "Today" },
+      { crop: "Pulses", state: "Uttarakhand", market: "Haridwar", price: 7150, change: "+0.7%", date: "Today" },
+      { crop: "Mustard", state: "Haryana", market: "Panipat", price: 5450, change: "+0.5%", date: "Today" }
+    ];
+
+    const tableBody = document.getElementById("priceTableBody");
+
+    function renderTable(data) {
+      tableBody.innerHTML = "";
+      if (data.length === 0) {
+        tableBody.innerHTML = `<tr><td colspan="6" class="text-center p-4 text-gray-500">No data found for selected filters</td></tr>`;
+        return;
+      }
+      data.forEach(item => {
+        const color = item.change.includes("-") ? "text-red-500" : "text-green-600";
+        const row = `
+          <tr class="border-t">
+            <td class="p-3 font-medium">${item.crop}</td>
+            <td class="p-3">${item.state}</td>
+            <td class="p-3">${item.market}</td>
+            <td class="p-3">₹${item.price}</td>
+            <td class="p-3 ${color} font-semibold">${item.change}</td>
+            <td class="p-3 text-gray-500">${item.date}</td>
+          </tr>`;
+        tableBody.insertAdjacentHTML("beforeend", row);
+      });
+    }
+
+    renderTable(priceData);
+
+    document.getElementById("filterBtn").addEventListener("click", () => {
+      const crop = document.getElementById("cropSelect").value;
+      const state = document.getElementById("stateSelect").value;
+
+      const filtered = priceData.filter(item => {
+        return (!crop || item.crop === crop) && (!state || item.state === state);
+      });
+      renderTable(filtered);
+    });
+  </script>
+</body>
+</html>

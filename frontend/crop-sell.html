@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AGRI DOST | Crop Selling Portal</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Poppins', sans-serif; }
+    input, select, textarea {
+      border: 1px solid #d1d5db;
+      border-radius: 0.5rem;
+      padding: 0.75rem;
+      width: 100%;
+    }
+    input:focus, select:focus, textarea:focus {
+      border-color: #16a34a;
+      outline: none;
+      box-shadow: 0 0 0 2px #bbf7d0;
+    }
+  </style>
+</head>
+<body class="bg-gray-100">
+
+  <div class="flex min-h-screen">
+
+    <!-- Sidebar -->
+    <aside class="w-64 bg-white shadow-md flex flex-col justify-between">
+      <div>
+        <div class="p-6 border-b">
+          <h1 class="text-2xl font-extrabold text-green-700">AGRI DOST</h1>
+          <p class="text-sm text-gray-500">Smart Farming Dashboard</p>
+        </div>
+        <nav class="mt-4 space-y-2">
+<a href="home.html" class="flex items-center px-6 py-3 text-gray-700 hover:bg-green-50">
+            <span class="material-icons mr-3">Home</span> Home
+          </a>
+
+          <a href="dashboard.html" class="flex items-center px-6 py-3 text-gray-700 hover:bg-green-50">
+            <span class="material-icons mr-3">dashboard</span> Dashboard
+          </a>
+          <a href="disease-detection.html" class="flex items-center px-6 py-3 text-gray-700 hover:bg-green-50">
+            <span class="material-icons mr-3">healing</span> Disease Detection
+          </a>
+          <a href="market-price.html" class="flex items-center px-6 py-3 text-gray-700 hover:bg-green-50">
+            <span class="material-icons mr-3">show_chart</span> Market Prices
+          </a>
+          <a href="crop-sell.html" class="flex items-center px-6 py-3 bg-green-100 text-green-800 font-semibold">
+            <span class="material-icons mr-3">shopping_cart</span> Sell Your Crops
+          </a>
+        </nav>
+      </div>
+      <div class="border-t p-4">
+        <a href="settings.html" class="flex items-center text-gray-700 hover:text-green-700 mb-3">
+          <span class="material-icons mr-3">settings</span> Settings
+        </a>
+        <a href="help.html" class="flex items-center text-gray-700 hover:text-green-700">
+          <span class="material-icons mr-3">help_outline</span> Help
+        </a>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="flex-1 p-8 overflow-y-auto">
+      <div class="flex justify-between items-center mb-8">
+        <h2 class="text-3xl font-bold text-gray-800">Sell Your Crops</h2>
+        <button class="bg-green-600 text-white px-5 py-2 rounded-md hover:bg-green-700 flex items-center">
+          <span class="material-icons mr-2">storefront</span> View My Listings
+        </button>
+      </div>
+
+      <!-- Form Section -->
+      <div class="bg-white p-8 rounded-2xl shadow-md max-w-4xl mx-auto">
+        <h3 class="text-2xl font-semibold text-green-700 mb-6 flex items-center">
+          <span class="material-icons mr-2 text-green-700">agriculture</span> Enter Crop Details
+        </h3>
+
+        <form id="cropForm" class="space-y-6">
+          <div class="grid md:grid-cols-2 gap-6">
+            <div>
+              <label class="block text-gray-700 mb-2 font-medium">Crop Name *</label>
+              <input type="text" id="cropName" placeholder="e.g., Wheat, Rice, Tomato" required>
+            </div>
+            <div>
+              <label class="block text-gray-700 mb-2 font-medium">Crop Type *</label>
+              <select id="cropType" required>
+                <option value="">Select type</option>
+                <option>Grain</option>
+                <option>Vegetable</option>
+                <option>Fruit</option>
+                <option>Pulses</option>
+                <option>Oilseeds</option>
+                <option>Other</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="grid md:grid-cols-2 gap-6">
+            <div>
+              <label class="block text-gray-700 mb-2 font-medium">Quantity (in Kg) *</label>
+              <input type="number" id="quantity" placeholder="e.g., 500" min="1" required>
+            </div>
+            <div>
+              <label class="block text-gray-700 mb-2 font-medium">Price per Kg (₹) *</label>
+              <input type="number" id="price" placeholder="e.g., 25" min="1" required>
+            </div>
+          </div>
+
+          <div class="grid md:grid-cols-2 gap-6">
+            <div>
+              <label class="block text-gray-700 mb-2 font-medium">Location *</label>
+              <input type="text" id="location" placeholder="e.g., Punjab, Maharashtra" required>
+            </div>
+            <div>
+              <label class="block text-gray-700 mb-2 font-medium">Harvest Date</label>
+              <input type="date" id="harvestDate">
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-gray-700 mb-2 font-medium">Description</label>
+            <textarea id="description" rows="4" placeholder="Describe the crop quality, variety, or any special details..."></textarea>
+          </div>
+
+          <div>
+            <label class="block text-gray-700 mb-2 font-medium">Upload Crop Images *</label>
+            <input type="file" id="cropImage" accept="image/*" multiple required>
+            <p class="text-gray-500 text-sm mt-1">You can upload multiple images (Max: 5)</p>
+          </div>
+
+          <div class="text-center">
+            <button type="submit" class="bg-green-600 text-white px-8 py-3 rounded-md hover:bg-green-700 text-lg font-medium flex items-center justify-center mx-auto">
+              <span class="material-icons mr-2">upload</span> Submit Crop for Sale
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <!-- Display Section -->
+      <section id="listedCrops" class="mt-12">
+        <h3 class="text-2xl font-semibold text-gray-800 mb-6">My Listed Crops</h3>
+        <div id="cropCards" class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <!-- Dynamic cards will appear here -->
+        </div>
+      </section>
+
+      <footer class="mt-12 text-center text-gray-600 text-sm">
+        © 2025 AGRI DOST | Empowering Farmers with Smart Agriculture
+      </footer>
+    </main>
+  </div>
+
+  <script>
+    const cropForm = document.getElementById('cropForm');
+    const cropCards = document.getElementById('cropCards');
+
+    cropForm.addEventListener('submit', function (e) {
+      e.preventDefault();
+      const cropName = document.getElementById('cropName').value;
+      const cropType = document.getElementById('cropType').value;
+      const quantity = document.getElementById('quantity').value;
+      const price = document.getElementById('price').value;
+      const location = document.getElementById('location').value;
+      const description = document.getElementById('description').value || "No description provided";
+
+      const card = document.createElement('div');
+      card.classList.add('bg-white', 'rounded-2xl', 'shadow-md', 'p-5', 'hover:shadow-lg', 'transition');
+
+      card.innerHTML = `
+        <img src="https://cdn.pixabay.com/photo/2017/07/24/19/44/wheat-2532633_1280.jpg" class="h-40 w-full object-cover rounded-xl mb-4" alt="Crop Image">
+        <h4 class="text-xl font-semibold text-green-700">${cropName}</h4>
+        <p class="text-gray-600 text-sm">${cropType}</p>
+        <p class="text-green-700 font-bold mt-2">₹${price} / kg</p>
+        <p class="text-gray-500 text-sm mt-1">Available: ${quantity} kg</p>
+        <p class="text-gray-500 text-sm mt-1">📍 ${location}</p>
+        <p class="text-gray-600 text-sm mt-2">${description}</p>
+        <button class="mt-4 w-full bg-green-600 text-white py-2 rounded-md hover:bg-green-700">Edit / Remove</button>
+      `;
+      cropCards.appendChild(card);
+      cropForm.reset();
+      alert('✅ Crop listed successfully!');
+    });
+  </script>
+
+</body>
+</html>

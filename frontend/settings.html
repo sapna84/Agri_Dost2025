@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Settings | Punara</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50 text-gray-800 font-[Poppins]">
+  <div class="max-w-5xl mx-auto p-6">
+    <h1 class="text-3xl font-semibold mb-6 text-green-700">⚙️ Account Settings</h1>
+
+    <div class="bg-white p-6 rounded-2xl shadow-md space-y-6">
+
+      <!-- Profile Info -->
+      <div>
+        <h2 class="text-xl font-semibold text-green-700 mb-2">Profile Information</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <input type="text" placeholder="Full Name" class="border border-gray-300 rounded-lg p-3 w-full focus:ring-2 focus:ring-green-500" />
+          <input type="email" placeholder="Email Address" class="border border-gray-300 rounded-lg p-3 w-full focus:ring-2 focus:ring-green-500" />
+          <input type="text" placeholder="Phone Number" class="border border-gray-300 rounded-lg p-3 w-full focus:ring-2 focus:ring-green-500" />
+          <input type="text" placeholder="Farm Location" class="border border-gray-300 rounded-lg p-3 w-full focus:ring-2 focus:ring-green-500" />
+        </div>
+      </div>
+
+      <!-- Preferences -->
+      <div>
+        <h2 class="text-xl font-semibold text-green-700 mb-2">Preferences</h2>
+        <div class="space-y-3">
+          <label class="flex items-center space-x-3">
+            <input type="checkbox" class="w-4 h-4 text-green-600" />
+            <span>Receive daily crop insights</span>
+          </label>
+          <label class="flex items-center space-x-3">
+            <input type="checkbox" class="w-4 h-4 text-green-600" />
+            <span>Enable weather notifications</span>
+          </label>
+          <label class="flex items-center space-x-3">
+            <input type="checkbox" class="w-4 h-4 text-green-600" />
+            <span>Get market price alerts</span>
+          </label>
+        </div>
+      </div>
+
+      <!-- Password Section -->
+      <div>
+        <h2 class="text-xl font-semibold text-green-700 mb-2">Change Password</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <input type="password" placeholder="Current Password" class="border border-gray-300 rounded-lg p-3 w-full focus:ring-2 focus:ring-green-500" />
+          <input type="password" placeholder="New Password" class="border border-gray-300 rounded-lg p-3 w-full focus:ring-2 focus:ring-green-500" />
+        </div>
+      </div>
+
+      <button class="bg-green-600 hover:bg-green-700 text-white py-3 px-6 rounded-lg transition-all duration-200">
+        Save Changes
+      </button>
+    </div>
+  </div>
+</body>
+</html>
