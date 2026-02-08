@@ -131,59 +131,16 @@
   </div>
 
   <script>
-    const priceData = [
-      { crop: "Wheat", state: "Punjab", market: "Ludhiana", price: 2300, change: "+1.2%", date: "Today" },
-      { crop: "Wheat", state: "Haryana", market: "Hisar", price: 2250, change: "+0.8%", date: "Today" },
-      { crop: "Wheat", state: "Uttar Pradesh", market: "Agra", price: 2220, change: "-0.4%", date: "Today" },
-      { crop: "Rice", state: "West Bengal", market: "Kolkata", price: 3050, change: "+1.0%", date: "Today" },
-      { crop: "Rice", state: "Tamil Nadu", market: "Thanjavur", price: 2990, change: "-0.2%", date: "Today" },
-      { crop: "Maize", state: "Madhya Pradesh", market: "Indore", price: 1820, change: "+0.5%", date: "Today" },
-      { crop: "Maize", state: "Bihar", market: "Patna", price: 1780, change: "-0.8%", date: "Today" },
-      { crop: "Cotton", state: "Gujarat", market: "Rajkot", price: 6200, change: "+2.1%", date: "Today" },
-      { crop: "Cotton", state: "Telangana", market: "Warangal", price: 6100, change: "+0.6%", date: "Today" },
-      { crop: "Sugarcane", state: "Maharashtra", market: "Pune", price: 320, change: "Stable", date: "Today" },
-      { crop: "Sugarcane", state: "Karnataka", market: "Belagavi", price: 310, change: "-0.3%", date: "Today" },
-      { crop: "Mustard", state: "Rajasthan", market: "Jaipur", price: 5500, change: "+1.4%", date: "Today" },
-      { crop: "Mustard", state: "Uttarakhand", market: "Dehradun", price: 5400, change: "-0.2%", date: "Today" },
-      { crop: "Onion", state: "Maharashtra", market: "Nashik", price: 2000, change: "+3.2%", date: "Today" },
-      { crop: "Onion", state: "Gujarat", market: "Ahmedabad", price: 1950, change: "-1.0%", date: "Today" },
-      { crop: "Potato", state: "Uttar Pradesh", market: "Kanpur", price: 1100, change: "+0.5%", date: "Today" },
-      { crop: "Potato", state: "West Bengal", market: "Howrah", price: 1050, change: "-0.8%", date: "Today" },
-      { crop: "Pulses", state: "Madhya Pradesh", market: "Bhopal", price: 7200, change: "+1.0%", date: "Today" },
-      { crop: "Pulses", state: "Chhattisgarh", market: "Raipur", price: 7100, change: "-0.3%", date: "Today" },
-      { crop: "Groundnut", state: "Gujarat", market: "Junagadh", price: 5600, change: "+0.9%", date: "Today" },
-      { crop: "Groundnut", state: "Andhra Pradesh", market: "Anantapur", price: 5500, change: "+0.3%", date: "Today" },
-      { crop: "Rice", state: "Assam", market: "Guwahati", price: 2970, change: "+0.5%", date: "Today" },
-      { crop: "Wheat", state: "Rajasthan", market: "Kota", price: 2260, change: "+0.6%", date: "Today" },
-      { crop: "Maize", state: "Odisha", market: "Cuttack", price: 1750, change: "-0.7%", date: "Today" },
-      { crop: "Cotton", state: "Andhra Pradesh", market: "Guntur", price: 6150, change: "+1.1%", date: "Today" },
-      { crop: "Mustard", state: "Bihar", market: "Muzaffarpur", price: 5350, change: "-0.5%", date: "Today" },
-      { crop: "Pulses", state: "Jharkhand", market: "Ranchi", price: 7000, change: "+0.4%", date: "Today" },
-      { crop: "Groundnut", state: "Tamil Nadu", market: "Madurai", price: 5550, change: "+0.6%", date: "Today" },
-      { crop: "Sugarcane", state: "Uttar Pradesh", market: "Meerut", price: 325, change: "Stable", date: "Today" },
-      { crop: "Rice", state: "Kerala", market: "Kochi", price: 3020, change: "+0.2%", date: "Today" },
-      { crop: "Onion", state: "Karnataka", market: "Hubballi", price: 1900, change: "-0.5%", date: "Today" },
-      { crop: "Potato", state: "Bihar", market: "Gaya", price: 1120, change: "+0.9%", date: "Today" },
-      { crop: "Wheat", state: "Chhattisgarh", market: "Raipur", price: 2210, change: "-0.2%", date: "Today" },
-      { crop: "Maize", state: "Telangana", market: "Nizamabad", price: 1810, change: "+0.3%", date: "Today" },
-      { crop: "Cotton", state: "Maharashtra", market: "Nagpur", price: 6300, change: "+2.5%", date: "Today" },
-      { crop: "Groundnut", state: "Odisha", market: "Balasore", price: 5480, change: "+0.1%", date: "Today" },
-      { crop: "Onion", state: "Tamil Nadu", market: "Coimbatore", price: 1980, change: "+0.8%", date: "Today" },
-      { crop: "Potato", state: "Punjab", market: "Jalandhar", price: 1080, change: "-0.3%", date: "Today" },
-      { crop: "Pulses", state: "Uttarakhand", market: "Haridwar", price: 7150, change: "+0.7%", date: "Today" },
-      { crop: "Mustard", state: "Haryana", market: "Panipat", price: 5450, change: "+0.5%", date: "Today" }
-    ];
-
     const tableBody = document.getElementById("priceTableBody");
 
     function renderTable(data) {
       tableBody.innerHTML = "";
-      if (data.length === 0) {
+      if (!data || data.length === 0) {
         tableBody.innerHTML = `<tr><td colspan="6" class="text-center p-4 text-gray-500">No data found for selected filters</td></tr>`;
         return;
       }
       data.forEach(item => {
-        const color = item.change.includes("-") ? "text-red-500" : "text-green-600";
+        const color = (item.change || '').includes("-") ? "text-red-500" : "text-green-600";
         const row = `
           <tr class="border-t">
             <td class="p-3 font-medium">${item.crop}</td>
@@ -197,17 +154,36 @@
       });
     }
 
-    renderTable(priceData);
-
-    document.getElementById("filterBtn").addEventListener("click", () => {
+    // Fetch data from backend endpoint; fall back to local array if fetch fails
+    function loadPrices() {
       const crop = document.getElementById("cropSelect").value;
       const state = document.getElementById("stateSelect").value;
+      const q = [];
+      if (crop) q.push('crop=' + encodeURIComponent(crop));
+      if (state) q.push('state=' + encodeURIComponent(state));
+      const qs = q.length ? ('?' + q.join('&')) : '';
+      fetch('/api/market-prices' + qs)
+        .then(r => r.json())
+        .then(j => {
+          if (j && j.data) {
+            renderTable(j.data);
+          } else {
+            console.warn('market API returned unexpected payload', j);
+            renderTable([]);
+          }
+        })
+        .catch(err => {
+          console.warn('Failed to fetch market prices, falling back to local data', err);
+          renderTable([]);
+        });
+    }
 
-      const filtered = priceData.filter(item => {
-        return (!crop || item.crop === crop) && (!state || item.state === state);
-      });
-      renderTable(filtered);
+    document.getElementById("filterBtn").addEventListener("click", () => {
+      loadPrices();
     });
+
+    // initial load
+    loadPrices();
   </script>
 </body>
 </html>

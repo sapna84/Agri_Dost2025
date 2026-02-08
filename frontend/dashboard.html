@@ -56,10 +56,15 @@
 
       <!-- Header -->
       <div class="flex justify-between items-center mb-8">
-        <h2 class="text-3xl font-bold text-gray-800">AI Crop Recommendations</h2>
-        <button class="flex items-center bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700">
-          <span class="material-icons mr-2">refresh</span> Refresh Data
-        </button>
+        <div>
+          <h2 class="text-3xl font-bold text-gray-800">AI Crop Recommendations</h2>
+          <p id="model-status" class="text-sm text-gray-500">Model: checking...</p>
+        </div>
+        <div class="flex items-center gap-3">
+          <button id="refreshAll" class="flex items-center bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700">
+            <span class="material-icons mr-2">refresh</span> Refresh Data
+          </button>
+        </div>
       </div>
 
       <!-- Dashboard Grid -->
@@ -121,20 +126,21 @@
             </h3>
             <div class="flex items-center justify-between">
               <div>
-                <p class="text-3xl font-bold">28°C</p>
-                <p class="text-gray-500">Partly Cloudy</p>
+                <p id="weather-temp" class="text-3xl font-bold">--°C</p>
+                <p id="weather-desc" class="text-gray-500">Loading...</p>
               </div>
               <div class="text-right text-sm text-gray-500">
-                <p>💧 65% humidity</p>
-                <p>💨 12 km/h wind</p>
+                <p id="weather-wind">� -- km/h wind</p>
+                <p id="weather-time">--</p>
               </div>
             </div>
-            <div class="flex justify-between mt-4 text-gray-600 text-sm">
-              <p>Mon ☀️ 30°</p>
-              <p>Tue 🌤 28°</p>
-              <p>Wed 🌧 27°</p>
-              <p>Thu ☀️ 29°</p>
-              <p>Fri ☀️ 31°</p>
+            <div id="weather-forecast" class="flex justify-between mt-4 text-gray-600 text-sm">
+              <!-- optional short forecast items -->
+              <p id="forecast-day1">Mon --°</p>
+              <p id="forecast-day2">Tue --°</p>
+              <p id="forecast-day3">Wed --°</p>
+              <p id="forecast-day4">Thu --°</p>
+              <p id="forecast-day5">Fri --°</p>
             </div>
           </div>
 
@@ -209,5 +215,103 @@
       </footer>
     </main>
   </div>
+  <script>
+    // Try to get geolocation; fall back to a central India location
+    const DEFAULT_LAT = 20.5937;
+    const DEFAULT_LON = 78.9629;
+
+    const WEATHER_CODES = {
+      0: {text: 'Clear sky', icon: '☀️'},
+      1: {text: 'Mainly clear', icon: '🌤'},
+      2: {text: 'Partly cloudy', icon: '⛅'},
+      3: {text: 'Overcast', icon: '☁️'},
+      45: {text: 'Fog', icon: '🌫'},
+      48: {text: 'Depositing rime fog', icon: '🌫'},
+      51: {text: 'Light drizzle', icon: '🌦'},
+      53: {text: 'Moderate drizzle', icon: '🌦'},
+      55: {text: 'Dense drizzle', icon: '🌧'},
+      61: {text: 'Slight rain', icon: '🌧'},
+      63: {text: 'Moderate rain', icon: '🌧'},
+      65: {text: 'Heavy rain', icon: '⛈'},
+      71: {text: 'Slight snow', icon: '❄️'},
+      73: {text: 'Moderate snow', icon: '❄️'},
+      75: {text: 'Heavy snow', icon: '❄️'},
+      80: {text: 'Rain showers', icon: '🌦'},
+      81: {text: 'Moderate showers', icon: '🌧'},
+      82: {text: 'Violent showers', icon: '⛈'}
+    };
+
+    function describeWeatherCode(code) {
+      const info = WEATHER_CODES[code];
+      if (info) return `${info.icon} ${info.text}`;
+      return `Code ${code}`;
+    }
+
+    function updateWeatherCard(w) {
+      if (!w) return;
+      document.getElementById('weather-temp').textContent = (w.temperature !== undefined ? Math.round(w.temperature) + '°C' : '--');
+      document.getElementById('weather-desc').textContent = (w.weathercode !== undefined ? describeWeatherCode(w.weathercode) : 'Current weather');
+      document.getElementById('weather-wind').textContent = '💨 ' + (w.windspeed !== undefined ? w.windspeed + ' km/h' : '--');
+      document.getElementById('weather-time').textContent = w.time || '--';
+    }
+
+    function fetchWeather(lat, lon) {
+      fetch(`/api/weather?lat=${encodeURIComponent(lat)}&lon=${encodeURIComponent(lon)}`)
+        .then(r => r.json())
+        .then(j => {
+          if (j && j.data) {
+            updateWeatherCard(j.data);
+          } else {
+            console.warn('weather API returned', j);
+          }
+        }).catch(e => console.error('weather fetch failed', e));
+        fetchStatus();
+    }
+
+      // Fetch model status and update the status badge
+      function fetchStatus() {
+        fetch('/status')
+          .then(r => r.json())
+          .then(j => {
+            const el = document.getElementById('model-status');
+            if (!el) return;
+            if (j.model_loaded) {
+              const fix = j.use_sigmoid_fix ? ' (sigmoid-fix on)' : '';
+              el.textContent = `Model: ready${fix}`;
+              el.className = 'text-sm text-green-600 font-medium';
+            } else {
+              el.textContent = 'Model: not loaded';
+              el.className = 'text-sm text-red-600 font-medium';
+            }
+          })
+          .catch(e => {
+            const el = document.getElementById('model-status');
+            if (el) { el.textContent = 'Model: status unavailable'; el.className = 'text-sm text-gray-500'; }
+          });
+      }
+
+      // Wire the Refresh button to update both weather and status
+      document.getElementById('refreshAll').addEventListener('click', () => {
+        if (navigator && navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(p => fetchWeather(p.coords.latitude, p.coords.longitude), () => fetchWeather(DEFAULT_LAT, DEFAULT_LON));
+        } else {
+          fetchWeather(DEFAULT_LAT, DEFAULT_LON);
+        }
+        fetchStatus();
+      });
+
+    if (navigator && navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(pos => {
+        const lat = pos.coords.latitude;
+        const lon = pos.coords.longitude;
+        fetchWeather(lat, lon);
+      }, err => {
+        // fallback
+        fetchWeather(DEFAULT_LAT, DEFAULT_LON);
+      }, { timeout: 5000 });
+    } else {
+      fetchWeather(DEFAULT_LAT, DEFAULT_LON);
+    }
+  </script>
 </body>
 </html>
